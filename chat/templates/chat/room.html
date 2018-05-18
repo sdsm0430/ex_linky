@@ -5,9 +5,10 @@
     <meta charset="utf-8"/>
     <title>Chat Room</title>
 </head>
-</body>
+<body>
     <textarea id="chat-log" cols="50" rows="60">
     </textarea>
+    {% if user.is_authenticated %}
     <textarea id="chat-message-input" type="text" size="100" cols="50" rows="60">
         {% for laugh in laughs %}
             가수 : {{ laugh.actor }}
@@ -16,6 +17,7 @@
         {% endfor %}
     </textarea>
     <input id="chat-message-submit" type="button" value="Send"/>
+    {% endif %}
 </body>
 <script>
     var roomName = {{ room_name_json }};
