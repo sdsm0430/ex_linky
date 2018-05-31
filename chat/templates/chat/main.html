@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Linky</title>
+</head>
+<body>
+시작 페이지
+<p>
+--------리뷰--------
+{% for review in reviews %}
+    <p>{{ review.review }}
+{% endfor %}
+<p>
+--------리뷰--------
+<p>
+<button><a href="{% url 'review' %}" style="color:black; text-decoration:none;">전체 후기</a></button>
+<button><a href="{% url 'choice' %}" style="color:black; text-decoration:none;">자막 송출</a></button>
+</body>
+</html>

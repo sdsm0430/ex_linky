@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ENGLISH</title>
+</head>
+<body oncontextmenu="return false" ondragstart="return false">
+    <textarea id="customer-chat" type="text" cols="30" rows="15">
+    </textarea>
+</body>
+<script>
+var pw = {{ password }};
+var SuccessURL = "#";
+    alert('"password"를 입력해주세요.');
+var password = prompt("PASSWORD 입력", "");
+    if(password == null){
+        alert("암호를 다시 입력해주세요.");
+        location = "#";
+    }
+    else{
+        var combo = password;
+        var total = combo.toLowerCase();
+
+        if(total === pw[0].password){
+            var chatSocket = new WebSocket(
+                'ws://' + window.location.host +
+                '/ws/chat/' + 'admin' + '/');
+
+            chatSocket.onmessage = function(e) {
+                var data = JSON.parse(e.data);
+                var message = data['english'];
+                document.querySelector('#customer-chat').value = (message + '\n');
+            };
+
+            chatSocket.onclose = function(e) {
+                console.error('Chat socket closed unexpectedly');
+            };
+        }
+        else{
+            alert("출입금지");
+            location = "#";
+        }
+    }
+
+function KeyEventHandle()
+    {
+            if(
+            ( event.ctrlKey == true && ( event.keyCode == 78 || event.keyCode == 82 ) ) ||
+    ( event.keyCode >= 112 && event.keyCode <= 123 ))
+            {
+                event.keyCode                = 0;
+                event.cancelBubble        = true;
+                event.returnValue        = false;
+            }
+    }
+    document.onkeydown=KeyEventHandle;
+    document.onkeyup=KeyEventHandle;
+</script>
+</html>

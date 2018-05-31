@@ -1,25 +1,33 @@
 <!-- chat/templates/chat/room.html -->
 <!DOCTYPE html>
+{% load i18n %}
 <html>
 <head>
     <meta charset="utf-8"/>
     <title>Chat Room</title>
 </head>
 <body>
-    <textarea id="chat-log" cols="50" rows="60">
+    <textarea id="chat-previous" cols="30" rows="15">
+        {% trans "Welcome to our page" %}
     </textarea>
-    {% if user.is_authenticated %}
-    <textarea id="chat-message-input" type="text" size="100" cols="50" rows="60">
-        {% for laugh in laughs %}
-            가수 : {{ laugh.actor }}
-            노래 : {{ laugh.song }}
-            음악 : {{ laugh.music }}
-        {% endfor %}
+    <textarea id="chat" type="text" cols="30" rows="15">
     </textarea>
-    <input id="chat-message-submit" type="button" value="Send"/>
-    {% endif %}
+    <textarea id="chat-next" type="text" size="100" cols="30" rows="15">
+    </textarea>
+    <textarea id="customer-chat" type="text" cols="30" rows="30">
+    </textarea>
+    <input id="chat-submit-next" type="button" value="다음"/>
+    <input id="chat-submit-previous" type="button" value="이전"/>
+    <input id="chat-pause" type="button" value="일시중지"/>
 </body>
+</html>
 <script>
+    prev = 0;
+    pause = 1;
+    var korean = {{ json_korean }};
+    var japanese = {{ json_japanese }};
+    var chinese = {{ json_chinese }};
+    var english = {{ json_english }};
     var roomName = {{ room_name_json }};
 
     var chatSocket = new WebSocket(
@@ -29,28 +37,100 @@
     chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
         var message = data['message'];
-        document.querySelector('#chat-log').value += (message + '\n');
+        var japanese = data['japanese'];
+        var chinese = data['chinese'];
+        var english = data['english'];
+        document.querySelector('#customer-chat').value = (message + '\n');
     };
 
     chatSocket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
     };
 
-    document.querySelector('#chat-message-input').focus();
-    document.querySelector('#chat-message-input').onkeyup = function(e) {
+    document.querySelector('#chat-next').focus();
+    document.querySelector('#chat-next').onkeyup = function(e) {
         if (e.keyCode === 13) {  // enter, return
-            document.querySelector('#chat-message-submit').click();
+            document.querySelector('#chat-submit-next').click();
+        }
+    };
+    document.querySelector('#chat-pause').onclick = function(e){
+        pause = !pause;
+        if (pause) {
+            var messagePreviousDom = document.querySelector('#chat-previous');
+            messagePreviousDom.value = korean[prev-1].song;
+            var messageKoreanChatDom = document.querySelector('#chat');
+            messageKoreanChatDom.value = korean[prev].song;
+            var messageNextDom = document.querySelector('#chat-next');
+            messageNextDom.value = korean[prev+1].song;
+            var message = messageKoreanChatDom.value;
+            var a = japanese[prev].song;
+            var b = chinese[prev].song;
+            var c = english[prev].song;
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'japanese': a,
+                'chinese': b,
+                'english': c,
+            }));
+        }
+    };
+    document.querySelector('#chat-submit-next').onclick = function(e) {
+            prev += 1;
+            console.log(prev);
+            var messagePreviousDom = document.querySelector('#chat-previous');
+            messagePreviousDom.value = korean[prev-1].song;
+            var messageKoreanChatDom = document.querySelector('#chat');
+            messageKoreanChatDom.value = korean[prev].song;
+            var messageNextDom = document.querySelector('#chat-next');
+            messageNextDom.value = korean[prev+1].song;
+        if (pause) {
+            var message = messageKoreanChatDom.value;
+            var a = japanese[prev].song;
+            var b = chinese[prev].song;
+            var c = english[prev].song;
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'japanese': a,
+                'chinese': b,
+                'english': c,
+            }));
+        }
+        else{
+            console.log('일시정지 상태입니다.')
         }
     };
 
-    document.querySelector('#chat-message-submit').onclick = function(e) {
-        var messageInputDom = document.querySelector('#chat-message-input');
-        var message = messageInputDom.value;
-        chatSocket.send(JSON.stringify({
-            'message': message
-        }));
-
-        messageInputDom.value = '{% for laugh in laughs_next %}\n가수 : {{ laugh.actor }}\n노래 : {{ laugh.song }}\n음악 : {{ laugh.music }}{% endfor %}';
+    document.querySelector('#chat-submit-previous').onclick = function(e) {
+            prev -= 1;
+            var messagePreviousDom = document.querySelector('#chat-previous');
+            messagePreviousDom.value = korean[prev-1].song;
+            var messageKoreanChatDom = document.querySelector('#chat');
+            messageKoreanChatDom.value = korean[prev].song;
+            var messageNextDom = document.querySelector('#chat-next');
+            messageNextDom.value = korean[prev+1].song;
+        if (pause) {
+            var message = messageKoreanChatDom.value;
+            var a = japanese[prev].song;
+            var b = chinese[prev].song;
+            var c = english[prev].song;
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'japanese': a,
+                'chinese': b,
+                'english': c,
+            }));
+        }
+        else{
+            console.log('일시정지 상태입니다.');
+        }
     };
+
+    /*
+    해결해야 할 이슈
+        chat에서 전달할 때 처음에 모든 칸을 비워주는 역할을 하는 함수가 필요.
+        onclick에서 작성할 것이 아니라, 메세지를 받는 시점에서 작성해야 함.
+        messagePreviousDom.value = '';
+        messageChatDom.value = '';
+        messageNextDom.value = '';
+    */
 </script>
-</html>
