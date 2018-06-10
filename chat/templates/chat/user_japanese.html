@@ -2,11 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <title>JAPANESE</title>
+    <style>
+        html, body{
+        background-color:black;
+        height:100%;
+        }
+    </style>
 </head>
 <body oncontextmenu="return false" ondragstart="return false">
-    <textarea id="customer-chat" type="text" cols="30" rows="15">
-    </textarea>
+    <textarea id="customer-music" type="text" cols="30" rows="15" style="resize:none; background-color:black; height:10%; width:90%; font-size:20px; color:rgb(200, 200, 200); border:black; margin: 4% 0% 2% 5%;"></textarea>
+    <textarea id="customer-actor" type="text" cols="30" rows="15" style="resize:none; background-color:black; height:30%; width:20%; font-size:25px; color:rgb(200, 200, 200); border:black; margin: 0% 0% 3% 2%; text-align:center;"></textarea>
+    <textarea id="customer-song"  type="text" cols="30" rows="15" style="resize:none; background-color:black; height:30%; width:75%; font-size:30px; color:white; border:black; margin-bottom:3%;"></textarea>
+    <textarea id="customer-actor-2" type="text" cols="30" rows="15" style="resize:none; background-color:black; height:30%; width:20%; font-size:25px; color:rgb(200, 200, 200); border:black; margin-left:2%;"></textarea>
+    <textarea id="customer-song-2"  type="text" cols="30" rows="15" style="resize:none; background-color:black; height:30%; width:75%; font-size:30px; border:black; color:white;"></textarea>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 </body>
 <script>
 var pw = {{ password }};
@@ -28,8 +46,13 @@ var password = prompt("PASSWORD 입력", "");
 
             chatSocket.onmessage = function(e) {
                 var data = JSON.parse(e.data);
-                var message = data['japanese'];
-                document.querySelector('#customer-chat').value = (message + '\n');
+                var japanese_music = data['japanese_music'];
+                var japanese_actor = data['japanese_actor'];
+                var japanese_song = data['japanese_song'];
+
+                document.querySelector('#customer-music').value = (japanese_music + '\n');
+                document.querySelector('#customer-actor').value = (japanese_actor + '\n');
+                document.querySelector('#customer-song').value = (japanese_song + '\n');
             };
 
             chatSocket.onclose = function(e) {

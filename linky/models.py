@@ -1,12 +1,8 @@
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
 
-class TMWL_korean(models.Model):
-    STATUS_CHOICES = (
-        ('draft', _('Draft')),
-        ('published', _('Published')),
-    )
+class korean(models.Model):
+    musical = models.CharField(null=True, max_length=50)
     actor = models.CharField(null=True, max_length=50)
     song = models.CharField(null=True, max_length=400)
     music = models.CharField(null=True, max_length=200)
@@ -16,11 +12,8 @@ class TMWL_korean(models.Model):
         self.published_date = timezone.now()
         self.save()
 
-class TMWL_japanese(models.Model):
-    STATUS_CHOICES = (
-        ('draft', _('Draft')),
-        ('published', _('Published')),
-    )
+class japanese(models.Model):
+    musical = models.CharField(null=True, max_length=50)
     actor = models.CharField(null=True, max_length=50)
     song = models.CharField(null=True, max_length=400)
     music = models.CharField(null=True, max_length=200)
@@ -30,11 +23,8 @@ class TMWL_japanese(models.Model):
         self.published_date = timezone.now()
         self.save()
 
-class TMWL_chinese(models.Model):
-    STATUS_CHOICES = (
-        ('draft', _('Draft')),
-        ('published', _('Published')),
-    )
+class chinese(models.Model):
+    musical = models.CharField(null=True, max_length=50)
     actor = models.CharField(null=True, max_length=50)
     song = models.CharField(null=True, max_length=400)
     music = models.CharField(null=True, max_length=200)
@@ -44,11 +34,8 @@ class TMWL_chinese(models.Model):
         self.published_date = timezone.now()
         self.save()
 
-class TMWL_english(models.Model):
-    STATUS_CHOICES = (
-        ('draft', _('Draft')),
-        ('published', _('Published')),
-    )
+class english(models.Model):
+    musical = models.CharField(null=True, max_length=50)
     actor = models.CharField(null=True, max_length=50)
     song = models.CharField(null=True, max_length=400)
     music = models.CharField(null=True, max_length=200)

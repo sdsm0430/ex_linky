@@ -56,16 +56,16 @@ def user_chinese(request):
 
 @login_required
 def room(request, room_name):
-    korean = TMWL_korean.objects.order_by('-published_date')
-    japanese = TMWL_japanese.objects.order_by('-published_date')
-    chinese = TMWL_chinese.objects.order_by('-published_date')
-    english = TMWL_english.objects.order_by('-published_date')
+    a = korean.objects.all().filter(musical='웃는남자').order_by('-published_date')
+    b = japanese.objects.all().filter(musical='웃는남자').order_by('-published_date')
+    c = chinese.objects.all().filter(musical='웃는남자').order_by('-published_date')
+    d = english.objects.all().filter(musical='웃는남자').order_by('-published_date')
     return render(request, 'chat/room.html', {
         'room_name_json': mark_safe(json.dumps(room_name)),
-        'json_korean': mark_safe(json.dumps(toJson(korean))),
-        'json_japanese': mark_safe(json.dumps(toJson(japanese))),
-        'json_chinese': mark_safe(json.dumps(toJson(chinese))),
-        'json_english': mark_safe(json.dumps(toJson(english))),
+        'json_korean': mark_safe(json.dumps(toJson(a))),
+        'json_japanese': mark_safe(json.dumps(toJson(b))),
+        'json_chinese': mark_safe(json.dumps(toJson(c))),
+        'json_english': mark_safe(json.dumps(toJson(d))),
     })
 
 def toJson(queryset):
