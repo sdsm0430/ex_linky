@@ -19,7 +19,7 @@
             <img src="{% static 'images/로고.png' %}" style="max-width:100%; height:auto; width:70%; margin-left:15%;">
         </div>
 
-        <div id="image-ex" style="width:90%; margin-left:5%; text-align:center; font-size:12px;">보이스루</div>
+        <div id="image-ex" style="width:90%; margin-left:5%; text-align:center; font-size:12px;"></div>
 
         <div style="width:95%; height:50%; margin-top: 5%; margin-left:2.5%; text-align:center;">
             <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
@@ -74,3 +74,24 @@
     </script>
 </body>
 </html>
+<!-- get browser version -->
+<script>
+navigator.sayswho= (function(){
+    var ua= navigator.userAgent, tem, 
+    M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    if(/trident/i.test(M[1])){
+        tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+        return 'IE '+(tem[1] || '');
+    }
+    if(M[1]=== 'Chrome'){
+        tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+        if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+    }
+    M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+    if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
+    return M.join(' ');
+})();
+
+console.log(navigator.sayswho); // outputs: `Chrome 62`
+document.getElementById("image-ex").innerHTML = navigator.sayswho;
+</script>
