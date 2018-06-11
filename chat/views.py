@@ -1,65 +1,109 @@
 # chat/views.py
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
 from .forms import ReviewForm
 from linky.models import *
 import json
 
+
 def main(request):
-    reviews = TMWL_review.objects.order_by('-published_date')[:5]
+    """
+    메인 페이지
+
+    linky.models.py 'Review' 모델 전달 완료
+    TODO:
+        추가적으로 'Musical' 모델 전달 필요
+    :param
+        request
+    :return
+        reviews queryset
+    """
+    reviews = Review.objects.order_by('-published_date')[:5]
     return render(request, 'chat/main.html', {'reviews':reviews, })
 
 def choice(request):
+    """
+    언어 선택 페이지
+
+    :param
+        request
+    """
     return render(request, 'chat/choice.html',{})
 
-def review(request):
-    reviews = TMWL_review.objects.all()
+def review(request, pk):
+    """
+    리뷰 페이지
+
+    리뷰 작성 폼과 리뷰 리스트 전달
+    :param
+        request
+        pk : Musical 함수 연동
+    :return:
+        ReviewForm(작성폼), queryset(리뷰 리스트)
+    """
+    reviews = Review.objects.all().filter(musical=pk)
+    musical = get_object_or_404(Musical, pk=pk)
     if request.method =="POST":
         form = ReviewForm(request.POST)
         if form.is_valid():
             review = form.save(commit=False)
-            review.published_date = timezone.now()
+            review.musical = musical
             review.save()
-            return redirect('review')
+            return redirect('review', pk=musical.pk)
     else:
         form = ReviewForm()
     return render(request, 'chat/review.html', {'reviews':reviews, 'form':form, })
 
 def index(request):
+    """
+    필요 없는 함수
+    """
     if request.method =="POST":
         form = ReviewForm(request.POST)
         if form.is_valid():
-            review = form.save(commit=False)
-            review.published_date = timezone.now()
-            review.save()
+            Review = form.save(commit=False)
+            Review.published_date = timezone.now()
+            Review.save()
             return redirect('index')
     else:
         form = ReviewForm()
     return render(request, 'chat/index.html', {'form':form,})
 
 def user_korean(request):
-    password = TMWL_password.objects.all()
+    """
+    korean 자막 송출 페이지
+    """
+    password = Musical.objects.all()
     return render(request, 'chat/user_korean.html', {'password': mark_safe(json.dumps(toJson_password(password))),})
 
 def user_japanese(request):
-    password = TMWL_password.objects.all()
+    """
+    japanese 자막 송출 페이지
+    """
+    password = Musical.objects.all()
     return render(request, 'chat/user_japanese.html', {'password': mark_safe(json.dumps(toJson_password(password))),})
 
 def user_english(request):
-    password = TMWL_password.objects.all()
+    """
+    english 자막 송출 페이지
+    """
+    password = Musical.objects.all()
     return render(request, 'chat/user_english.html', {'password': mark_safe(json.dumps(toJson_password(password))),})
 
 def user_chinese(request):
-    password = TMWL_password.objects.all()
+    """
+    chinese 자막 송출 페이지
+    """
+    password = Musical.objects.all()
     return render(request, 'chat/user_chinese.html', {'password': mark_safe(json.dumps(toJson_password(password))),})
 
 @login_required
 def room(request, room_name):
-    a = korean.objects.all().filter(musical='웃는남자').order_by('-published_date')
-    b = japanese.objects.all().filter(musical='웃는남자').order_by('-published_date')
-    c = chinese.objects.all().filter(musical='웃는남자').order_by('-published_date')
-    d = english.objects.all().filter(musical='웃는남자').order_by('-published_date')
+    a = Script.objects.all().filter(language='한국어')
+    b = Script.objects.all().filter(language='영어')
+    c = Script.objects.all().filter(language='일본어')
+    d = Script.objects.all().filter(language='중국어')
     return render(request, 'chat/room.html', {
         'room_name_json': mark_safe(json.dumps(room_name)),
         'json_korean': mark_safe(json.dumps(toJson(a))),
