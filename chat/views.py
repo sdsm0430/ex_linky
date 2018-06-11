@@ -6,21 +6,30 @@ from .forms import ReviewForm
 from linky.models import *
 import json
 
+def operate_list(request):
+    musicals = Musical.objects.order_by('-published_date')
+    return render(request,'chat/operate_list.html', {'musicals':musicals, })
 
-def main(request):
+def main_list(request):
+    musicals = Musical.objects.order_by('-published_date')
+    return render(request, 'chat/main_list.html', {'musicals': musicals, })
+
+def main_detail(request, pk):
     """
     메인 페이지
 
     linky.models.py 'Review' 모델 전달 완료
     TODO:
         추가적으로 'Musical' 모델 전달 필요
+        pk 전달 필요
     :param
         request
     :return
         reviews queryset
     """
-    reviews = Review.objects.order_by('-published_date')[:5]
-    return render(request, 'chat/main.html', {'reviews':reviews, })
+    musical = get_object_or_404(Musical, pk=pk)
+    reviews = Review.objects.all().filter(musical=pk)[:5]
+    return render(request, 'chat/main.html', {'musical':musical, 'reviews':reviews, })
 
 def choice(request):
     """
@@ -42,18 +51,20 @@ def review(request, pk):
     :return:
         ReviewForm(작성폼), queryset(리뷰 리스트)
     """
-    reviews = Review.objects.all().filter(musical=pk)
     musical = get_object_or_404(Musical, pk=pk)
+    reviews = Review.objects.all().filter(musical=pk)
     if request.method =="POST":
         form = ReviewForm(request.POST)
         if form.is_valid():
             review = form.save(commit=False)
             review.musical = musical
+            print(review.musical)
+            review.published_date = timezone.now()
             review.save()
             return redirect('review', pk=musical.pk)
     else:
         form = ReviewForm()
-    return render(request, 'chat/review.html', {'reviews':reviews, 'form':form, })
+    return render(request, 'chat/review.html', {'reviews':reviews, 'form':form, 'pk':pk})
 
 def index(request):
     """
@@ -73,6 +84,9 @@ def index(request):
 def user_korean(request):
     """
     korean 자막 송출 페이지
+    TODO:
+        pk 값 적용하며 password 전달
+        get_object_or_404 활용
     """
     password = Musical.objects.all()
     return render(request, 'chat/user_korean.html', {'password': mark_safe(json.dumps(toJson_password(password))),})

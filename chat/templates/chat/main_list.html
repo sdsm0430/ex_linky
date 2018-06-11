@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Linky</title>
+</head>
+<body>
+Musical List
+{% for musical in musicals %}
+    <br><a href="{% url 'main_detail' pk=musical.pk %}" style="text-decoration:none;">{{ musical.title }}</a>
+    <br>{{ musical.producer }}
+    <br>{{ musical.genre }}
+    <br>{{ musical.slogan }}
+{% endfor %}
+</body>
+</html>
