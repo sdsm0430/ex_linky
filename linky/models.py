@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+import csv, os
+from django.conf import settings
 
 #뮤지컬에 대한 정보를 담고 있는 모델
 class Musical(models.Model):
@@ -28,6 +30,15 @@ class Musical(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self):
+        """
+        csv 저장될 때 계속 Script 업데이트.
+        """
+        super(Musical,self).save()
+
+
+
+
 #각 뮤지컬 모델에 One to Many로 연결한 리뷰 모델
 class Review(models.Model):
     musical = models.ForeignKey(Musical, related_name='reviews')        #OnetoMany 연결
@@ -48,3 +59,4 @@ class Script(models.Model):
     music = models.CharField(null=True, max_length=200)                 #음악
     actor = models.CharField(null=True, max_length=50)                  #배우
     song = models.CharField(null=True, max_length=400)                  #노래, 가사
+    order = models.IntegerField(null=True)                                       #순서
