@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.main, name='main'),
     url(r'^choice/$', views.choice, name='choice'),
-    url(r'^review(?P<pk>\d+)/$', views.review, name='review'),
+    url(r'^review/$', views.review, name='review'),
     url(r'^chat/$', views.index, name='index'),
     url(r'^chat/user_korean$', views.user_korean, name='user_korean'),
     url(r'^chat/user_japanese$', views.user_japanese, name='user_japanese'),

@@ -213,6 +213,7 @@
 
     document.querySelector('#chat-submit-previous').onclick = function(e) {
             prev -= 1;
+            console.log(korean[prev].actor);
             var messagePrevmusicDom = document.querySelector('#a-music');
             messagePrevmusicDom.value = korean[prev-1].music;
             var messagePrevactorDom = document.querySelector('#a-actor');
