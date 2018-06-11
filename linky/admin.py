@@ -1,11 +1,8 @@
 from django.contrib import admin
 from .models import *
 
-admin.site.register(korean)
-admin.site.register(english)
-admin.site.register(chinese)
-admin.site.register(japanese)
-admin.site.register(TMWL_password)
-admin.site.register(TMWL_review)
+admin.site.register(Musical)
+admin.site.register(Script)
+admin.site.register(Review)
 
 # Register your models here.
