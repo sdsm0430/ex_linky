@@ -6,7 +6,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # *args는 값을 넣으면 함수에 변수가 튜플형태로 입력되는 것이고, **kwargs는 딕셔너리 형태로 입력되는 것이다.
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
+        self.room_group_name = 'operate_%s' % self.room_name
 
         # Join room group
         await self.channel_layer.group_add(

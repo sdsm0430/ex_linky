@@ -1,0 +1,85 @@
+@import url(https://cdn.rawgit.com/openhiun/hangul/14c0f6faa2941116bb53001d6a7dcd5e82300c3f/nanumbarungothic.css);
+
+*{
+    font-family: 'Nanum Barun Gothic', sans-serif;
+}
+
+html, body{
+        height:100%;
+        }
+
+.top-banner{
+        display:table;
+        color:white;
+        font-size:1.5em;
+        width:100%;
+        height:80px;
+        background-repeat:no-repeat;
+        background-position: top;
+        background-size:100%;
+        }
+
+.top-banner span{
+        vertical-align:middle;
+        display:table-cell;
+        }
+
+.top-banner span img{
+        padding-right:25px;
+}
+
+
+.category-ranking{
+        display:inline-block;
+        width:100%;
+}
+
+.category-ranking img{
+        float:right;
+        height:30px;
+        width:45%;
+}
+
+.musical{
+        margin-top:5%;
+        margin-bottom:3%;
+        margin-left:15px;
+        margin-right:10px;
+}
+
+.musical .musical-image{
+        vertical-align:top;
+        display:inline-block;
+}
+
+.musical .musical-image img{
+        width:70px;
+        height:70px;
+}
+
+.musical .musical-info .musical-title{
+        font-weight:bold;
+}
+
+.musical .musical-info{
+        display:inline-block;
+        margin-left:5px;
+        width:71%;
+}
+
+.musical .musical-info span img{
+        width:10px;
+        height:10px;
+}
+
+.musical .musical-info .musical-slogan{
+        display:inline-block;;
+        margin-top:10px;
+        font-size:10px;
+        width: 100%;
+}
+
+.musical .musical-info .musical-place-term{
+        font-size:10px;
+        width:100%;
+}

@@ -17,7 +17,7 @@
         {% csrf_token %}
         <label style="font-size:14px;">리뷰를 작성해주시면 감사하겠습니다.</label>
         <p>{{ form.review }}</p>
-        <input type="submit" class="save btn btn-secondary" style="font-size:12px; padding:5px;"></input>
+        <input type="submit" class="save btn btn-secondary" style="font-size:12px; padding:5px;" />
     </form>
     <button><a href="{% url 'main_detail' pk=pk %}" style="color:black; text-decoration:none;">메인 화면</a></button>
 </body>

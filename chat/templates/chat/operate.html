@@ -1,4 +1,4 @@
-<!-- chat/templates/chat/room.html -->
+<!-- chat/templates/chat/operate.html -->
 <!DOCTYPE html>
 {% load i18n %}
 <html>
@@ -64,7 +64,7 @@
 
     var chatSocket = new WebSocket(
         'ws://' + window.location.host +
-        '/ws/chat/' + roomName + '/');
+        '/ws/operate/' + roomName + '/');
 
     /*
     chatSocket.onmessage = function(e) {

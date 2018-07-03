@@ -1,0 +1,21 @@
+@import url(https://cdn.rawgit.com/openhiun/hangul/14c0f6faa2941116bb53001d6a7dcd5e82300c3f/nanumbarungothic.css);
+
+*{
+    font-family: 'Nanum Barun Gothic', sans-serif;
+}
+
+.top-banner .back .image{
+    width:50px;
+    height:50px;
+}
+
+.top-banner .back img{
+    height:20px;
+    width:20px;
+    margin:4% 0 0 4%;
+}
+
+.language-title {
+    margin:15% 0 0 4%;
+}
+

@@ -2,93 +2,121 @@
 {% load staticfiles %}
 <html lang="en">
 <head>
+    <link href='https://cdn.rawgit.com/openhiun/hangul/14c0f6faa2941116bb53001d6a7dcd5e82300c3f/nanumbarungothic.css' rel='stylesheet' type='text/css'>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main_detail.css' %}" />
     <!-- bootstrap css -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <title>Linky</title>
     <style>
-        html, body{
+        html, body, main{
         height:100%;
         }
     </style>
 </head>
 <body>
-    <div id="main" style="width:device-width; height:device-height;">
+    <div class="main" style="width:device-width; height:device-height;">
+        <div class="top-banner">
+            <div class="back">
+                <span class="image"><img src="{% static 'images/main/button_back.png' %}"></span>
+                <span class="title" style="text-align:center;">{{musical.title}}</span>
+            </div>
+        </div>
         <div>
-            <img src="{% static 'images/로고.png' %}" style="max-width:100%; height:auto; width:70%; margin-left:15%;">
+            <img src="{% static 'images/main/background_poster.png' %}" style="width:100%; height:180px;">
+        </div>
+        <div>
+            <img src="{% static 'images/main/background_gray.png' %}" style="width:100%; height:18px;">
         </div>
 
-        <div id="image-ex" style="width:90%; margin-left:5%; text-align:center; font-size:12px;"></div>
+        <div class="musical-nav">
+            <div class="musical-producer">
+                {{ musical.producer }}
+            </div>
+            <div class="musical-apply">
+                신청현황
+            </div>
+            <div class="musical-review">
+                관람후기
+            </div>
+        </div>
 
-        <div style="width:95%; height:50%; margin-top: 5%; margin-left:2.5%; text-align:center;">
-            <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" style="color:black; font-size:10px;">공연소식</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false" style="color:black; font-size:10px;">관람후기</a>
-              </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active text-muted" id="home" role="tabpanel" aria-labelledby="home-tab" style="font-size:25px;"><br><br><strong>'준비중'</strong></div>
-                <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="margin-top:5px;">
-                    {% for review in reviews %}
-                        <div class="row">
-                            <div class="col-7" style="text-align:left;">{{ review.review }}</div>
-                            <div class="col-5" style="font-size:5px;">{{ review.published_date }}</div>
+        <div class="review" style="background-image:url('{% static 'images/main/background_review_gray.png' %}');">
+            <span style="font-weight:bold;">관람후기</span>
+            <span style="color:red;">356</span>
+        </div>
+        <div class="review-contents" style="width:100%;">
+            {% for review in reviews %}
+            <div class="review-score">
+                {% if review.star == 1 %}
+                    <div class="row">
+                        <div class="col-4">
+                            <span class="red-star"><img src="{% static 'images/main/score_star_redsmall.png' %}"></span>
                         </div>
-                        <br>
-                    {% endfor %}
-                    <br>
-                </div>
+                        <div class="col-8">
+                            <span class="review-date" style="float:right;">{{ review.published_date }}</span>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if review.star == 2 %}
+                    <div class="row">
+                        <div class="col-4">
+                            <span class="red-star"><img src="{% static 'images/main/score_star_redsmall.png' %}"><img src="{% static 'images/main/score_star_redsmall.png' %}"></span>
+                        </div>
+                        <div class="col-8">
+                            <span class="review-date" style="float:right;">{{ review.published_date }}</span>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if review.star == 3 %}
+                    <div class="row">
+                        <div class="col-4">
+                            <span class="red-star"><img src="{% static 'images/main/score_star_redsmall.png' %}"><img src="{% static 'images/main/score_star_redsmall.png' %}"><img src="{% static 'images/main/score_star_redsmall.png' %}"></span>
+                        </div>
+                        <div class="col-8">
+                            <span class="review-date" style="float:right;">{{ review.published_date }}</span>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if review.star == 4 %}
+                    <div class="row">
+                        <div class="col-4">
+                            <span class="red-star"><img src="{% static 'images/main/score_star_redsmall.png' %}"><img src="{% static 'images/main/score_star_redsmall.png' %}"><img src="{% static 'images/main/score_star_redsmall.png' %}"><img src="{% static 'images/main/score_star_redsmall.png' %}"></span>
+                        </div>
+                        <div class="col-8">
+                            <span class="review-date" style="float:right;">{{ review.published_date }}</span>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if review.star == 5 %}
+                    <div class="row">
+                        <div class="col-4">
+                            <span class="red-star"><img src="{% static 'images/main/score_star_redsmall.png' %}"><img src="{% static 'images/main/score_star_redsmall.png' %}"><img src="{% static 'images/main/score_star_redsmall.png' %}"><img src="{% static 'images/main/score_star_redsmall.png' %}"><img src="{% static 'images/main/score_star_redsmall.png' %}"></span>
+                        </div>
+                        <div class="col-8">
+                            <span class="review-date" style="float:right;">{{ review.published_date }}</span>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
+            <div class="row" style="border-bottom:0.1px solid rgb(235, 235, 235);">
+                <div class="col-12" style="text-align:left;">{{ review.review }}</div>
+            </div>
+            {% endfor %}
         </div>
 
-        <div class="footer fixed-bottom">
-            <div style="text-align:center; margin-top:1%;">
-                <button type="button" class="btn btn-secondary btn-sm rounded" style="width:48%; height:40px;" disabled>자막신청</button>
-                <button type="button" class="btn btn-danger btn-sm rounded" style="width:48%; height:40px; background-color:#e34442; border:#e34442;"><a href="{% url 'choice' %}" style="color:white; text-decoration:none;">자막실행</a></button>
-            </div>
-            <nav class="nav nav-fill" style="margin-top:1%;">
-                <a class="nav-item nav-link" href="#" style="color:black; text-decoration:none; font-size:9px;"><img src="{% static 'images/01.png' %}" style="height:25px; width:25px; margin-bottom:5px;"><br>홈</a>
-                <a class="nav-item nav-link" href="#" style="color:black; text-decoration:none; font-size:9px;"><img src="{% static 'images/02.png' %}" style="height:25px; width:25px; margin-bottom:5px;"><br>마이페이지</a>
-                <a class="nav-item nav-link" href="#" style="color:black; text-decoration:none; font-size:9px;"><img src="{% static 'images/03.png' %}" style="height:25px; width:25px; margin-bottom:5px;"><br>검색</a>
-                <a class="nav-item nav-link" href="#" style="color:black; text-decoration:none; font-size:9px;"><img src="{% static 'images/04.png' %}" style="height:25px; width:25px; margin-bottom:5px;"><br>공유</a>
-            </nav>
+        <div class="script-bottom" style="text-align:center; margin-bottom:0;">
+                <button type="button" class="btn btn-sm" style="width:48%; height:40px; background-color:red;"><a href="{% url 'apply' pk=pk %}" style="color:white; text-decoration:none; font-size:15px; font-weight:bold;">자막이용신청</a></button>
+                <button type="button" class="btn btn-sm" style="width:48%; height:40px; background-color:white; border:solid 1px red;"><a href="{% url 'choice' pk=pk %}" style="color:red; text-decoration:none; font-size:15px; font-weight:bold;">자막실행</a></button>
         </div>
     </div>
 
 
     <!-- bootstrap javascript -->
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-    <script>
-     $(function () {
-        $('#myTab li:last-child a').tab('show')
-      })
-    </script>
+
 </body>
 </html>
-<!-- get browser version -->
-<script>
-navigator.sayswho= (function(){
-    var ua= navigator.userAgent, tem, 
-    M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-    if(/trident/i.test(M[1])){
-        tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
-        return 'IE '+(tem[1] || '');
-    }
-    if(M[1]=== 'Chrome'){
-        tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
-        if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
-    }
-    M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
-    if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
-    return M.join(' ');
-})();
-
-console.log(navigator.sayswho); // outputs: `Chrome 62`
-document.getElementById("image-ex").innerHTML = navigator.sayswho;
-</script>

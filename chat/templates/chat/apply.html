@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <link href='https://cdn.rawgit.com/openhiun/hangul/14c0f6faa2941116bb53001d6a7dcd5e82300c3f/nanumbarungothic.css' rel='stylesheet' type='text/css'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/apply.css' %}" />
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <title>Apply</title>
+    <style>
+        html, body, main{
+        height:100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-banner">
+        <div class="back">
+            <span class="image"><img src="{% static 'images/main/button_back.png' %}"></span>
+            <span class="title" style="text-align:center;">자막이용신청</span>
+        </div>
+    </div>
+
+    <form method="POST" class="post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>필수 정보 입력</div>
+        <div>성공적인 점수를 위해 아래 정보를 정확하게 입력해주세요.</div>
+        <div>(정확하지 않은 정보 입력으로 인한 문제는 링키가 책임지지 않습니다.)</div>
+        <label style="font-size:14px;">신청자 이름</label>
+            <span><p>{{ form.name }}</p></span>
+        <label style="font-size:14px;">신청자 전화번호</label>
+            <span><p>{{ form.phone }}</p></span>
+        <label style="font-size:14px;">공연 일시</label>
+            <span><p>{{ form.date }}</p></span>
+        <label style="font-size:14px;">자막 이용인원</label>
+            <span><p>{{ form.personnel }}</p></span>
+        <input type="submit" class="save btn btn-secondary" style="font-size:12px; padding:5px;">
+    </form>
+    <button><a href="{% url 'apply_image' pk=pk %}">다음</a></button>
+    <button><a href="{% url 'main_detail' pk=pk %}" style="color:black; text-decoration:none;">메인 화면</a></button>
+</body>
+</html>

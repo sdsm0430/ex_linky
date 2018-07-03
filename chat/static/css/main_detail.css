@@ -1,0 +1,84 @@
+@import url(https://cdn.rawgit.com/openhiun/hangul/14c0f6faa2941116bb53001d6a7dcd5e82300c3f/nanumbarungothic.css);
+
+*{
+    font-family: 'Nanum Barun Gothic', sans-serif;
+}
+
+.main .top-banner .back .image{
+    width:50px;
+    height:50px;
+}
+
+.main .top-banner .back img{
+    height:20px;
+    width:20px;
+    margin:15px 0 15px 15px;
+}
+
+.main .top-banner .back .title{
+    width:30px;
+    margin:0 auto;
+    font-weight:bold;
+}
+
+.main .musical-nav .musical-producer{
+    border-bottom:0.1px solid rgb(235, 235, 235);
+    font-size:25px;
+    text-align:center;
+    width:100%;
+    height:40px;
+}
+
+.main .musical-nav .musical-apply{
+    font-size:13px;
+    color:gray;
+    margin:5px 0 0 0;
+    padding-bottom:5px;
+    text-align:center;
+    width:49%;
+    display:inline-block;
+}
+
+.main .musical-nav .musical-review{
+    font-size:13px;
+    font-weight:bold;
+    margin:5px 0 0 0;
+    padding-bottom:5px;
+    text-align:center;
+    width:49%;
+    display:inline-block;
+    border-bottom:1px solid red;
+}
+
+.main .review{
+    padding: 2.5% 0 2.5% 3%;
+}
+
+.main .review-contents{
+    height:40%;
+    width:94%;
+    margin-top:5%;
+}
+
+.main .review-contents .review-score{
+    margin-right:3%;
+    margin-left:3%;
+    margin-top:4%;
+    font-size:10px;
+}
+
+.main .review-contents .review-score .red-star img{
+    width:13px;
+    height:13px;
+    vertical-align:top;
+}
+
+.main .review-contents .review-score .review-date{
+    font-size:10px;
+}
+
+
+.main .review-contents .row .col-12{
+    margin: 2% 0 4% 2.5%;
+    font-size:13px;
+}

@@ -5,7 +5,7 @@ from django.conf import settings
 
 #뮤지컬에 대한 정보를 담고 있는 모델
 class Musical(models.Model):
-    title = models.CharField(null=True, max_length=50)                                                  #뮤지컬
+    title = models.CharField(blank=True, null=True, max_length=50)                                                  #뮤지컬
     published_date = models.DateTimeField(blank=True, null=True)                                        #모델 생성 일시
     producer = models.CharField(null=True, max_length=50)                                               #제작사
     producer_logo = models.ImageField(blank=True, null=True)                                            #제작사 로고
@@ -22,6 +22,7 @@ class Musical(models.Model):
     repre_image = models.ImageField(blank=True, null=True)                                              #대표이미지
     csv = models.FileField(blank=True, null=True)                                                       #자막 업로드를 쉽게 하기 위한 csv 필드
     password = models.CharField(null=True, max_length=50)                                               #영상 송출 시 유출 방지를 위한 password 저장 필드
+    admin_password = models.CharField(null=True, max_length=50)
 
     def publish(self):
         self.publish_date = timezone.now()
@@ -35,9 +36,6 @@ class Musical(models.Model):
         csv 저장될 때 계속 Script 업데이트.
         """
         super(Musical,self).save()
-
-
-
 
 #각 뮤지컬 모델에 One to Many로 연결한 리뷰 모델
 class Review(models.Model):
@@ -64,3 +62,15 @@ class Script(models.Model):
 
     def __str__(self):
         return self.language
+
+#각 뮤지컬 모델에 자막이용 신청을 한 유저 정보를 담고 있는 모델
+class Apply(models.Model):
+    musical = models.ForeignKey(Musical, related_name='applys')                             #OnetoMany 연결
+    name = models.CharField(null=True, max_length=30)                                       #신청자 이름
+    phone = models.CharField(null=True, max_length=15)                                      #신청자 전화번호
+    date = models.CharField(null=True, max_length=30, help_text='ex) 7월 10일 오후 3시')    #공연일시
+    personnel = models.CharField(null=True, max_length=5)                                   #인원수
+    ticket_image = models.ImageField(blank=True, null=True, upload_to="musical/%Y/%m/%d")   #예매 인증 이미지
+
+    def __str__(self):
+        return self.name
