@@ -96,7 +96,7 @@ def apply(request, pk):
             apply = form.save(commit=False)
             apply.musical = musical
             apply.save()
-            return redirect('apply', pk=musical.pk)
+            return redirect('apply_complete', pk=musical.pk)
     else:
         form = ApplyForm()
     return render(request, 'chat/apply.html', {
@@ -121,7 +121,9 @@ def apply_image(request, pk):
     })
 
 def apply_complete(request, pk):
+    musical = get_object_or_404(Musical, pk=pk)
     return render(request, 'chat/apply_complete.html', {
+        'musical':musical,
         'pk':pk,
     })
 

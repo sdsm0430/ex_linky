@@ -1,10 +1,54 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en">
 <head>
+    <link href='https://cdn.rawgit.com/openhiun/hangul/14c0f6faa2941116bb53001d6a7dcd5e82300c3f/nanumbarungothic.css' rel='stylesheet' type='text/css'>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/apply.css' %}" />
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <title>Apply</title>
+    <style>
+        html, body{
+        height:100%;
+        position:relative;
+        }
+
+        .fin-info{
+            color:rgb(210, 210, 210);
+            font-size:0.8em;
+        }
+
+        .fin-info-2{
+            color:white;
+            font-size:1.5em;
+            margin-bottom:7%;
+        }
+    </style>
 </head>
-<body>
-요청 완료
+<body style="background-color:rgb(255,63,63); width:100%;">
+    <div class="top-banner">
+        <div class="back">
+            <span class="image"><a href="{% url 'main_detail' pk=pk %}"><img src="{% static 'images/search/button_cancel.png' %}"></a></span>
+        </div>
+    </div>
+    <div style="font-size:45px; text-shadow:1.5px 1.5px 1.5px black; margin:10% 0 0 7%; color:white">
+        <span>접수완료</span>
+    </div>
+    <div style="height:55%; margin:10% 0 0 7%;">
+        <div class="fin-info">작품 명</div>
+        <div class="fin-info-2">뮤지컬 {{ musical.title }}</div>
+
+        <div class="fin-info">공연일시</div>
+        <div class="fin-info-2">2018년</div>
+
+        <div class="fin-info">자막 이용인원</div>
+        <div class="fin-info-2">2명</div>
+    </div>
+    <div style="position:absolute; bottom:5%; right:7%;">
+        <span style="color:white; font-size:1.3em;">홈으로</span>
+        <span><a href="{% url 'main_detail' pk=pk %}"><img src="{% static 'images/자막방/button_right.png' %}" style="width:50px; height:50px;"></a></span>
+    </div>
 </body>
 </html>
