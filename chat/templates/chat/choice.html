@@ -27,11 +27,11 @@
     <div class="language-choice" style="margin-left:4%; text-align:center;">
         <div style="margin-top:10%;">
             <span><button type="button" class="btn btn-outline-dark"><a href="{% url 'user_korean' room_name=musical %}" style="color:black; text-decoration:none;">KOREAN</a></button></span>
-            <span><button type="button" class="btn btn-outline-dark"><a href="{% url 'user_english' pk=musical.pk room_name=musical%}" style="color:black; text-decoration:none;">ENGLISH</a></button></span>
+            <span><button type="button" class="btn btn-outline-dark"><a href="{% url 'user_english' room_name=musical%}" style="color:black; text-decoration:none;">ENGLISH</a></button></span>
         </div>
         <div style="margin-top:10%; margin-bottom:5%;">
-            <button type="button" class="btn btn-outline-dark"><a href="{% url 'user_japanese' pk=musical.pk room_name=musical%}" style="color:black; text-decoration:none;">JAPANESE</a></button>
-            <button type="button" class="btn btn-outline-dark"><a href="{% url 'user_chinese' pk=musical.pk room_name=musical%}" style="color:black; text-decoration:none;">CHINESE</a></button>
+            <button type="button" class="btn btn-outline-dark"><a href="{% url 'user_japanese' room_name=musical%}" style="color:black; text-decoration:none;">JAPANESE</a></button>
+            <button type="button" class="btn btn-outline-dark"><a href="{% url 'user_chinese' room_name=musical%}" style="color:black; text-decoration:none;">CHINESE</a></button>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

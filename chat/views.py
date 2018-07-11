@@ -8,6 +8,14 @@ import json
 
 @login_required
 def operate_list(request):
+    """
+    오퍼레이팅 뮤지컬 리스트 페이지
+
+    :param
+        request
+    :return
+        musical queryset
+    """
     musicals = Musical.objects.order_by('-published_date')
     return render(request,'chat/operate_list.html', {
         'musicals':musicals,
@@ -15,6 +23,14 @@ def operate_list(request):
 
 @login_required
 def password(request, pk):
+    """
+    오페레이팅 패스워드 등록 페이지
+
+    :param
+        request, pk
+    :return:
+        form, musical model
+    """
     musical = get_object_or_404(Musical, pk=pk)
     if request.method == "POST":
         form = PasswordForm(request.POST, instance=musical)
@@ -32,6 +48,14 @@ def password(request, pk):
 
 @login_required
 def admin_password(request, pk):
+    """
+    오퍼레이팅 패스워드 확인 페이지
+
+    :param
+        request, pk
+    :return
+        form, musical model
+    """
     musical = get_object_or_404(Musical, pk=pk)
     if request.method == "POST":
         form = AdminPasswordForm(request.POST, instance=musical)
@@ -48,6 +72,14 @@ def admin_password(request, pk):
 
 @login_required
 def operate(request, room_name):
+    """
+    자막 오퍼레이팅 페이지
+
+    :param
+        request, room_name
+    :return
+        room_name(json), script queryset 4종류
+    """
     musical = get_object_or_404(Musical, title=room_name)
     a = Script.objects.all().filter(language='한국어', musical=musical)
     b = Script.objects.all().filter(language='영어', musical=musical)
@@ -71,14 +103,13 @@ def main_detail(request, pk):
     """
     메인 페이지
 
-    linky.models.py 'Review' 모델 전달 완료
     TODO:
-        추가적으로 'Musical' 모델 전달 필요
-        pk 전달 필요
+        추가적으로 'Musical' 모델 전달 필요 (clear)
+        pk 전달 필요 (clear)
     :param
-        request
+        request, pk
     :return
-        reviews queryset
+        reviews queryset, pk, musical model
     """
     musical = get_object_or_404(Musical, pk=pk)
     reviews = Review.objects.all().filter(musical=pk)[:5]
@@ -89,6 +120,14 @@ def main_detail(request, pk):
     })
 
 def apply(request, pk):
+    """
+    자막 요청 페이지
+
+    :param
+        request, pk
+    :return
+        form, pk
+    """
     musical = get_object_or_404(Musical, pk=pk)
     if request.method =="POST":
         form = ApplyForm(request.POST)
@@ -105,6 +144,9 @@ def apply(request, pk):
     })
 
 def apply_image(request, pk):
+    """
+    이미지 업로드 뷰, 현재 사용하지 않음
+    """
     musical = get_object_or_404(Musical, pk=pk)
     if request.method =="POST":
         form = ApplyImageForm(request.POST, request.FILES)
@@ -121,11 +163,20 @@ def apply_image(request, pk):
     })
 
 def apply_complete(request, pk):
+    """
+    자막 요청 완료 페이지
+
+    :param
+        request, pk:
+    :return
+        musical model, pk
+    """
     musical = get_object_or_404(Musical, pk=pk)
     return render(request, 'chat/apply_complete.html', {
         'musical':musical,
         'pk':pk,
     })
+
 
 def choice(request, pk):
     """
@@ -133,6 +184,8 @@ def choice(request, pk):
 
     :param
         request, pk
+    :return
+        musical model, pk
     """
     musical = get_object_or_404(Musical, pk=pk)
     return render(request, 'chat/choice.html', {
@@ -143,9 +196,14 @@ def choice(request, pk):
 def user_korean(request, room_name):
     """
     korean 자막 송출 페이지
+
     TODO:
         pk 값 적용하며 password 전달 (clear)
-        get_object_or_404 활용 (no)
+        get_object_or_404 활용 (clear)
+    :param
+        request, room_name
+    :return
+        room_name(json), musical model, musical queryset
     """
     musical = get_object_or_404(Musical, title=room_name)
     password = Musical.objects.all().filter(title=room_name)
@@ -155,42 +213,42 @@ def user_korean(request, room_name):
         'musical':musical,
     })
 
-def user_japanese(request, room_name, pk):
+def user_japanese(request, room_name):
     """
     japanese 자막 송출 페이지
+
     """
-    musical = get_object_or_404(Musical, pk=pk)
-    password = Musical.objects.all()
+    musical = get_object_or_404(Musical, title=room_name)
+    password = Musical.objects.all().fiter(title=room_name)
     return render(request, 'chat/user_japanese.html', {
         'room_name_json': mark_safe(json.dumps(room_name)),
         'musical':musical,
         'password': mark_safe(json.dumps(toJson_password(password))),
-        'pk':pk,
     })
 
-def user_english(request, room_name, pk):
+def user_english(request, room_name):
     """
     english 자막 송출 페이지
+
     """
-    musical = get_object_or_404(Musical, pk=pk)
-    password = Musical.objects.all()
+    musical = get_object_or_404(Musical, title=room_name)
+    password = Musical.objects.all().filter(title=room_name)
     return render(request, 'chat/user_english.html', {
         'room_name_json': mark_safe(json.dumps(room_name)),
         'password': mark_safe(json.dumps(toJson_password(password))),
-        'pk':pk,
         'musical':musical,
     })
 
-def user_chinese(request, room_name, pk):
+def user_chinese(request, room_name):
     """
     chinese 자막 송출 페이지
+
     """
-    musical = get_object_or_404(Musical, pk=pk)
-    password = Musical.objects.all()
+    musical = get_object_or_404(Musical, title=room_name)
+    password = Musical.objects.all().filter(title=room_name)
     return render(request, 'chat/user_chinese.html', {
         'room_name_json': mark_safe(json.dumps(room_name)),
         'password': mark_safe(json.dumps(toJson_password(password))),
-        'pk':pk,
         'musical':musical,
     })
 
@@ -232,13 +290,12 @@ def toJson_password(queryset):
 def review(request, pk):
     """
     리뷰 페이지
-
     리뷰 작성 폼과 리뷰 리스트 전달
+
     :param
-        request
-        pk : Musical 함수 연동( ? )
+        request, pk
     :return:
-        ReviewForm(작성폼), queryset(리뷰 리스트)
+        review queryset, form,  pk
     """
     musical = get_object_or_404(Musical, pk=pk)
     reviews = Review.objects.all().filter(musical=pk)

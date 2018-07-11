@@ -8,11 +8,11 @@
     <!-- bootstrap css -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <title>KOREAN</title>
+        }
     <style>
         html, body{
         background-color:black;
         height:100%;
-        }
     </style>
 </head>
 <body oncontextmenu="return false" ondragstart="return false">
@@ -27,58 +27,58 @@
 <script>
 var pw = {{ password }};
 var roomName = {{ room_name_json }};
-
 var SuccessURL = "#";
+
+if(!localStorage.total){
     alert('"password"를 입력해주세요.');
-var password = prompt("PASSWORD 입력", "");
+    var password = prompt("PASSWORD 입력", "");
     if(password == null){
         alert("암호를 다시 입력해주세요.");
         location = "#";
     }
+    localStorage.total = password.toLowerCase();
+}
+
+    if(localStorage.total === pw[0].password){
+
+        var chatSocket = new WebSocket(
+            'ws://' + window.location.host +
+            '/ws/operate/' + roomName + '/');
+
+        chatSocket.onmessage = function(e) {
+            var data = JSON.parse(e.data);
+            var korean_music = data['korean_music'];
+            var korean_actor = data['korean_actor'];
+            var korean_song = data['korean_song'];
+            if (!(typeof(data) == 'object')){
+            console.log('리뷰를 작성해주세요');
+            }
+            document.querySelector('#customer-music').value = (korean_music + '\n');
+            document.querySelector('#customer-actor').value = (korean_actor + '\n');
+            document.querySelector('#customer-song').value = (korean_song + '\n');
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+    }
     else{
-        var combo = password;
-        var total = combo.toLowerCase();
-
-        if(total === pw[0].password){
-            var chatSocket = new WebSocket(
-                'ws://' + window.location.host +
-                '/ws/operate/' + roomName + '/');
-
-            chatSocket.onmessage = function(e) {
-                var data = JSON.parse(e.data);
-                var korean_music = data['korean_music'];
-                var korean_actor = data['korean_actor'];
-                var korean_song = data['korean_song'];
-
-                document.querySelector('#customer-music').value = (korean_music + '\n');
-                document.querySelector('#customer-actor').value = (korean_actor + '\n');
-                document.querySelector('#customer-song').value = (korean_song + '\n');
-            };
-
-            chatSocket.onclose = function(e) {
-                console.error('Chat socket closed unexpectedly');
-            };
-        }
-        else{
-            alert("출입금지");
+        alert('"password"를 입력해주세요.');
+        var password = prompt("PASSWORD 입력", "");
+        if(password == null){
+            alert("암호를 다시 입력해주세요.");
             location = "#";
         }
+        localStorage.total = password.toLowerCase();
     }
 
-function KeyEventHandle()
-    {
-            if(
-            ( event.ctrlKey == true && ( event.keyCode == 78 || event.keyCode == 82 ) ) ||
-    ( event.keyCode >= 112 && event.keyCode <= 123 ))
-            {
-                event.keyCode                = 0;
-                event.cancelBubble        = true;
-                event.returnValue        = false;
-            }
-    }
-    document.onkeydown=KeyEventHandle;
-    document.onkeyup=KeyEventHandle;
 </script>
+<!--
+<script type="text/javascript"> location.href="notice/List.jsp";
+</script>
+-->
+
 <script type="text/javascript" language = "javascript">
 /*
 // 모바일 웹 주소창 숨기기

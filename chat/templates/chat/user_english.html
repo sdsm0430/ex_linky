@@ -25,56 +25,48 @@
 <script>
 var pw = {{ password }};
 var roomName = {{ room_name_json }};
-
 var SuccessURL = "#";
+
+if(!localStorage.total){
     alert('"password"를 입력해주세요.');
-var password = prompt("PASSWORD 입력", "");
+    var password = prompt("PASSWORD 입력", "");
     if(password == null){
         alert("암호를 다시 입력해주세요.");
         location = "#";
     }
+    localStorage.total = password.toLowerCase();
+}
+
+    if(localStorage.total === pw[0].password){
+
+        var chatSocket = new WebSocket(
+            'ws://' + window.location.host +
+            '/ws/operate/' + roomName + '/');
+
+        chatSocket.onmessage = function(e) {
+            var data = JSON.parse(e.data);
+            var english_music = data['english_music'];
+            var english_actor = data['english_actor'];
+            var english_song = data['english_song'];
+
+            document.querySelector('#customer-music').value = (english_music + '\n');
+            document.querySelector('#customer-actor').value = (english_actor + '\n');
+            document.querySelector('#customer-song').value = (english_song + '\n');
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+    }
     else{
-        var combo = password;
-        var total = combo.toLowerCase();
-
-        if(total === pw[0].password){
-            var chatSocket = new WebSocket(
-                'ws://' + window.location.host +
-                '/ws/operate/' + roomName + '/');
-
-            chatSocket.onmessage = function(e) {
-                var data = JSON.parse(e.data);
-                var english_music = data['english_music'];
-                var english_actor = data['english_actor'];
-                var english_song = data['english_song'];
-
-                document.querySelector('#customer-music').value = (english_music + '\n');
-                document.querySelector('#customer-actor').value = (english_actor + '\n');
-                document.querySelector('#customer-song').value = (english_song + '\n');
-            };
-
-            chatSocket.onclose = function(e) {
-                console.error('Chat socket closed unexpectedly');
-            };
-        }
-        else{
-            alert("출입금지");
+        alert('"password"를 입력해주세요.');
+        var password = prompt("PASSWORD 입력", "");
+        if(password == null){
+            alert("암호를 다시 입력해주세요.");
             location = "#";
         }
+        localStorage.total = password.toLowerCase();
     }
-
-function KeyEventHandle()
-    {
-            if(
-            ( event.ctrlKey == true && ( event.keyCode == 78 || event.keyCode == 82 ) ) ||
-    ( event.keyCode >= 112 && event.keyCode <= 123 ))
-            {
-                event.keyCode                = 0;
-                event.cancelBubble        = true;
-                event.returnValue        = false;
-            }
-    }
-    document.onkeydown=KeyEventHandle;
-    document.onkeyup=KeyEventHandle;
 </script>
 </html>
