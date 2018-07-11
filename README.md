@@ -17,3 +17,6 @@ ALTER ROLE linkey SET timezone TO 'UTC';
 ```
 GRANT ALL PRIVILEGES ON DATABASE myproject TO linkey;
 ```
+
+### django-channels
+* pip install channels
