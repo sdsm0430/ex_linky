@@ -16,7 +16,6 @@
         .post-form input{
         font-size:120%;
         }
-
     </style>
 </head>
 <body>
@@ -28,7 +27,7 @@
     </div>
 
     <div class="necessary-info" style="width:100%; height:18%;">
-        <div style="font-weight:bold; font-size:25px; margin:5% 0 0 5%; background-image:url('{% static 'images/search/object_underbar_red.png' %}'); background-position:left bottom; background-repeat:no-repeat; background-size:40% 50%; width:100%; height:30%;">필수정보 입력</div>
+        <div style="font-weight:bold; font-size:25px; margin-top:5%; width:100%; height:30%;"><span style="margin-left:5%; background-image:url('{% static 'images/search/object_underbar_red.png' %}'); background-position:left bottom; background-repeat:no-repeat; background-size:100% 50%; ">필수정보 입력</span></div>
         <div style="margin:3% 3% 0 5%; font-size:13px;">성공적인 점수를 위해 아래 정보를 정확하게 입력해주세요.</div>
         <div style="margin:0 3% 0 5%; font-size:13px; color:gray">(정확하지 않은 정보 입력으로 인한 문제는 링키가 책임지지 않습니다.)</div>
     </div>
@@ -36,14 +35,14 @@
     <form method="POST" class="post-form" enctype="multipart/form-data">
         {% csrf_token %}
         <div style="margin:3% 5% 0 5%;">
-        <label style="font-size:14px;">신청자 이름</label>
-            <span><p>{{ form.name }}</p></span>
-        <label style="font-size:14px;">신청자 전화번호</label>
-            <span><p>{{ form.phone }}</p></span>
-        <label style="font-size:14px;">공연 일시</label>
-            <span><p>{{ form.date }}</p></span>
-        <label style="font-size:14px;">자막 이용인원</label>
-            <span><p>{{ form.personnel }}</p></span>
+            <label style="font-size:14px;">신청자 이름</label>
+                <span><p>{{ form.name }}</p></span>
+            <label style="font-size:14px;">신청자 전화번호</label>
+                <span><p>{{ form.phone }}</p></span>
+            <label style="font-size:14px;">공연 일시</label>
+                <span><p>{{ form.date }}</p></span>
+            <label style="font-size:14px;">자막 이용인원</label>
+                <span><p>{{ form.personnel }}</p></span>
         </div>
         <button class="fixed-bottom" type="submit" style="height:8%; color:white; border:none; width:100%; font-size:12px; padding:5px; background-image:url('{% static 'images/search/button_bottom_red.png' %}');"><span style="font-size:20px;">다음</span></button>
     </form>
