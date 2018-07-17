@@ -1,24 +1,59 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en">
 <head>
+    <link href='https://cdn.rawgit.com/openhiun/hangul/14c0f6faa2941116bb53001d6a7dcd5e82300c3f/nanumbarungothic.css' rel='stylesheet' type='text/css'>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <!-- bootstrap css -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <title>Operate</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main_list.css' %}" />
+    <title>Linkey</title>
     <style>
-        html, body{
-        height:100%;
-        }
+
     </style>
 </head>
 <body>
-Musical List
-{% for musical in musicals %}
-    <br><a href="{% url 'admin_password' pk=musical.pk %}">{{ musical.title }}</a>
-    <br>{{ musical.producer }}
-    <br>{{ musical.genre }}
-    <br>{{ musical.slogan }}
-{% endfor %}
+    <div class="top-banner" style="background-image:url('{% static 'images/main_list/background_top.png' %}'); background-size: 100% 80px;">
+        <span style="padding-left:25px;">LINKEY</span>
+        <span><img src="{% static 'images/main_list/button_research.png' %}" style="float:right;"></span>
+    </div>
+    <nav class="nav nav-pills nav-fill" style="border-bottom:0.2px solid gray; color:gray; font-weight:bold; font-size:0.8em;">
+        <a class="nav-item nav-link" style="color:#ff2734;">뮤지컬</a>
+        <a class="nav-item nav-link">연극</a>
+        <a class="nav-item nav-link">영화</a>
+        <a class="nav-item nav-link">기타</a>
+    </nav>
+    <div class="category-ranking">
+        <img src="{% static 'images/main_list/button_category_ranking.png' %}">
+    </div>
+    {% for musical in musicals %}
+        <div class="musical">
+            <div class="musical-image">
+                <img src="{% static 'images/main_list/object_picture.png'%}">
+            </div>
+            <div class="musical-info">
+                <span class="musical-title"><a href="{% url 'admin_password' pk=musical.pk %}" style="text-decoration:none; color:black;">{{ musical.title }}</a></span>
+                <span style="float:right;"><span><img src="{% static 'images/main_list/score_star_yellow.png' %}"></span><span style="font-size:10px;">    4.8</span></span>
+                <div class="musical-slogan">
+                    {{ musical.slogan }}
+                </div>
+                <div class="musical-place-term">
+                    <span style="float:left;">{{ musical.place }}</span>
+                    <span style="float:right;">{{ musical.term }}</span>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script>
+     $(function () {
+        $('#myTab li:last-child a').tab('show')
+      })
+    </script>
 </body>
 </html>

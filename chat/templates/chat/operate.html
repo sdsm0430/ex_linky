@@ -149,8 +149,11 @@
             }));
         }
     };
+    console.log(prev);
     document.querySelector('#chat-submit-next').onclick = function(e) {
+            console.log(prev);
             prev += 1;
+            console.log(prev);
             var messagePrevmusicDom = document.querySelector('#a-music');
             messagePrevmusicDom.value = korean[prev-1].music;
             var messagePrevactorDom = document.querySelector('#a-actor');

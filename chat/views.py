@@ -37,12 +37,13 @@ def password(request, pk):
         if form.is_valid():
             password = form.save(commit=False)
             password.save()
-            return redirect('operate_list')
+            return redirect('operate', room_name=musical)
             #return redirect('operate_list', pk=musical.pk)
     else:
         form = PasswordForm(instance=musical)
     return render(request, 'chat/password.html', {
         'form': form,
+        'pk': pk,
         'musical':musical,
     })
 
@@ -50,6 +51,9 @@ def password(request, pk):
 def admin_password(request, pk):
     """
     오퍼레이팅 패스워드 확인 페이지
+
+    TODO:
+    유효성 검사
 
     :param
         request, pk
@@ -62,7 +66,7 @@ def admin_password(request, pk):
         if form.is_valid():
             admin_password = form.save(commit=False)
             admin_password.save()
-            return redirect('operate_list')
+            return redirect('operate_password', pk=musical.pk)
     else:
         form = AdminPasswordForm(instance=musical)
     return render(request, 'chat/admin_password.html', {
@@ -219,7 +223,7 @@ def user_japanese(request, room_name):
 
     """
     musical = get_object_or_404(Musical, title=room_name)
-    password = Musical.objects.all().fiter(title=room_name)
+    password = Musical.objects.all().filter(title=room_name)
     return render(request, 'chat/user_japanese.html', {
         'room_name_json': mark_safe(json.dumps(room_name)),
         'musical':musical,

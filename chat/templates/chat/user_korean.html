@@ -50,8 +50,9 @@ if(!localStorage.total){
             var korean_music = data['korean_music'];
             var korean_actor = data['korean_actor'];
             var korean_song = data['korean_song'];
+            console.log(typeof(data));
             if (!(typeof(data) == 'object')){
-            console.log('리뷰를 작성해주세요');
+                console.log('리뷰를 작성해주세요');
             }
             document.querySelector('#customer-music').value = (korean_music + '\n');
             document.querySelector('#customer-actor').value = (korean_actor + '\n');
