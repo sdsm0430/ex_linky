@@ -23,6 +23,7 @@ class Musical(models.Model):
     csv = models.FileField(blank=True, null=True)                                                       #자막 업로드를 쉽게 하기 위한 csv 필드
     password = models.CharField(null=True, max_length=50)                                               #영상 송출 시 유출 방지를 위한 password 저장 필드
     admin_password = models.CharField(null=True, max_length=50)
+    admin_password2 = models.CharField(null=True, max_length=50)
 
     def publish(self):
         self.publish_date = timezone.now()
