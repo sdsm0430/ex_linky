@@ -10,17 +10,19 @@ class PasswordForm(forms.ModelForm):
         exclude = (
         'title', 'published_date', 'producer', 'producer_logo', 'term', 'place', 'slogan', 'genre', 'viewing_age',
         'runtime', 'language', 'poster', 'banner_image', 'background_image', 'repre_image', 'csv', 'admin_password',
+        'admin_password2',
         )
 
 class AdminPasswordForm(forms.ModelForm):
-    admin_password = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    admin_password2 = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Musical
-        fields = ('admin_password',)
+        fields = ('admin_password2',)
         exclude = (
         'title', 'published_date', 'producer', 'producer_logo', 'term', 'place', 'slogan', 'genre', 'viewing_age',
         'runtime', 'language', 'poster', 'banner_image', 'background_image', 'repre_image', 'csv', 'password',
+        'admin_password',
         )
 
 

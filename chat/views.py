@@ -64,9 +64,12 @@ def admin_password(request, pk):
     if request.method == "POST":
         form = AdminPasswordForm(request.POST, instance=musical)
         if form.is_valid():
-            admin_password = form.save(commit=False)
-            admin_password.save()
-            return redirect('operate_password', pk=musical.pk)
+            admin_password2 = form.save(commit=False)
+            admin_password2.save()
+            if musical.admin_password == musical.admin_password2:
+                return redirect('operate_password', pk=musical.pk)
+            else:
+                return redirect('admin_password', pk=musical.pk)
     else:
         form = AdminPasswordForm(instance=musical)
     return render(request, 'chat/admin_password.html', {
@@ -107,9 +110,6 @@ def main_detail(request, pk):
     """
     메인 페이지
 
-    TODO:
-        추가적으로 'Musical' 모델 전달 필요 (clear)
-        pk 전달 필요 (clear)
     :param
         request, pk
     :return
@@ -176,8 +176,10 @@ def apply_complete(request, pk):
         musical model, pk
     """
     musical = get_object_or_404(Musical, pk=pk)
+    apply = Apply.objects.last()
     return render(request, 'chat/apply_complete.html', {
         'musical':musical,
+        'apply':apply,
         'pk':pk,
     })
 
@@ -201,9 +203,6 @@ def user_korean(request, room_name):
     """
     korean 자막 송출 페이지
 
-    TODO:
-        pk 값 적용하며 password 전달 (clear)
-        get_object_or_404 활용 (clear)
     :param
         request, room_name
     :return

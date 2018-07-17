@@ -6,7 +6,6 @@ import csv, os
 
 @receiver(post_save, sender=Musical)
 def renew_scripts(sender, **kwargs):
-    print('시그널')
     musical = kwargs['instance']
     if(musical.csv):
         # 먼저 script 잡고 다 지움

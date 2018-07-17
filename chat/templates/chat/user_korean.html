@@ -13,6 +13,7 @@
         html, body{
         background-color:black;
         height:100%;
+        }
     </style>
 </head>
 <body oncontextmenu="return false" ondragstart="return false">
@@ -47,13 +48,18 @@ if(!localStorage.total){
 
         chatSocket.onmessage = function(e) {
             var data = JSON.parse(e.data);
+            var korean_music ='';
             var korean_music = data['korean_music'];
             var korean_actor = data['korean_actor'];
             var korean_song = data['korean_song'];
             console.log(typeof(data));
-            if (!(typeof(data) == 'object')){
+            console.log(typeof(korean_music));
+            console.log(korean_music);
+            if (korean_music==''){
                 console.log('리뷰를 작성해주세요');
+                console.log(korean_music);
             }
+
             document.querySelector('#customer-music').value = (korean_music + '\n');
             document.querySelector('#customer-actor').value = (korean_actor + '\n');
             document.querySelector('#customer-song').value = (korean_song + '\n');
@@ -75,11 +81,6 @@ if(!localStorage.total){
     }
 
 </script>
-<!--
-<script type="text/javascript"> location.href="notice/List.jsp";
-</script>
--->
-
 <script type="text/javascript" language = "javascript">
 /*
 // 모바일 웹 주소창 숨기기

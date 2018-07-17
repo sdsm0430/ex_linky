@@ -30,7 +30,7 @@
                 <img src="{% static 'images/main_list/object_picture.png'%}">
             </div>
             <div class="musical-info">
-                <span class="musical-title"><a href="{% url 'main_detail' pk=musical.pk %}" style="text-decoration:none; color:black;">{{ musical.title }}</a></span>
+                <span class="musical-title"><a href="{% url 'main_detail' pk=musical.pk %}" style="text-decoration:none; color:black;">{{ musical.korean_title }}</a></span>
                 <span style="float:right;"><span><img src="{% static 'images/main_list/score_star_yellow.png' %}"></span><span style="font-size:10px;">    4.8</span></span>
                 <div class="musical-slogan">
                     {{ musical.slogan }}

@@ -5,7 +5,8 @@ from django.conf import settings
 
 #뮤지컬에 대한 정보를 담고 있는 모델
 class Musical(models.Model):
-    title = models.CharField(blank=True, null=True, max_length=50)                                                  #뮤지컬
+    title = models.CharField(blank=True, null=True, max_length=50)                                                  #뮤지컬_영어
+    korean_title = models.CharField(blank=True, null=True, max_length=50)                                                  #뮤지컬_한글
     published_date = models.DateTimeField(blank=True, null=True)                                        #모델 생성 일시
     producer = models.CharField(null=True, max_length=50)                                               #제작사
     producer_logo = models.ImageField(blank=True, null=True)                                            #제작사 로고
