@@ -48,6 +48,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             {
                 'type': 'chat_message',
+
                 'chinese_song': chinese_song,
                 'chinese_actor': chinese_actor,
                 'chinese_music': chinese_music,

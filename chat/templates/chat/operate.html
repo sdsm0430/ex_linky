@@ -70,7 +70,23 @@
         '/ws/operate/' + roomName + '/');
 
     document.querySelector('#chat-exit').onclick = function(e){
-      chatSocket = error;
+        chatSocket.send(JSON.stringify({
+          'japanese_song': '링키9397!',
+          'japanese_actor': '',
+          'japanese_music': '',
+
+          'chinese_song': '링키9397!',
+          'chinese_actor': '',
+          'chinese_music': '',
+
+          'english_song': '링키9397!',
+          'english_actor': '',
+          'english_music': '',
+
+          'korean_song': '링키9397!',
+          'korean_actor': '',
+          'korean_music': '',
+        }));
     }
 
     chatSocket.onclose = function(e) {

@@ -2,10 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <!-- bootstrap css -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <title>JAPANESE</title>
+        }
     <style>
         html, body{
         background-color:black;
@@ -16,8 +19,7 @@
 <body oncontextmenu="return false" ondragstart="return false">
     <textarea id="customer-music" type="text" cols="30" rows="15" style="overflow:hidden; resize:none; background-color:black; height:10%; width:90%; font-size:20px; color:rgb(200, 200, 200); border:black; margin: 4% 0% 2% 5%;" disabled></textarea>
     <textarea id="customer-actor" type="text" cols="30" rows="15" style="overflow:hidden; resize:none; background-color:black; height:30%; width:20%; font-size:25px; color:rgb(200, 200, 200); border:black; margin: 0% 0% 3% 2%; text-align:center;" disabled></textarea>
-    <textarea id="customer-song"  type="text" cols="30" rows="15" style="overflow:hidden; resize:none; background-color:black; height:30%; width:75%; font-size:40px; color:white; border:black; margin-bottom:3%;" disabled></textarea>
-
+    <textarea id="customer-song"  type="text" cols="30" rows="15" style="overflow:hidden; resize:none; background-color:black; height:30%; width:75%; font-size:40px; color:white; border:black; margin: 0% 0% 3% 2%;" disabled></textarea>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -46,13 +48,89 @@ if(!localStorage.total){
 
         chatSocket.onmessage = function(e) {
             var data = JSON.parse(e.data);
+
             var japanese_music = data['japanese_music'];
             var japanese_actor = data['japanese_actor'];
             var japanese_song = data['japanese_song'];
 
-            document.querySelector('#customer-music').value = (japanese_music + '\n');
-            document.querySelector('#customer-actor').value = (japanese_actor + '\n');
-            document.querySelector('#customer-song').value = (japanese_song + '\n');
+            if (japanese_song=='링키9397!'){
+              alert('리뷰를 작성해주시면 감사하겠습니다.');
+              console.log(roomName);
+              document.location.href="http://www.linkey.co.kr/review/" + roomName;
+            }
+            else{
+                if(typeof(japanese_music) == 'object'){
+                    if(typeof(japanese_actor)!='object' && typeof(japanese_song)!='object'){
+                      document.querySelector('#customer-music').value = '';
+                      document.querySelector('#customer-actor').value = (japanese_actor + '\n');
+                      document.querySelector('#customer-song').value = (japanese_song + '\n');
+                    }
+                    else if(typeof(japanese_actor)=='object' && typeof(japanese_song)!='object'){
+                      document.querySelector('#customer-music').value = '';
+                      document.querySelector('#customer-actor').value = '';
+                      document.querySelector('#customer-song').value = (japanese_song + '\n');
+                    }
+                    else if(typeof(japanese_actor)!='object' && typeof(japanese_song)=='object'){
+                      document.querySelector('#customer-music').value = '';
+                      document.querySelector('#customer-actor').value = (japanese_actor + '\n');
+                      document.querySelector('#customer-song').value = '';
+                    }
+                    else{
+                      document.querySelector('#customer-music').value = '';
+                      document.querySelector('#customer-actor').value = '';
+                      document.querySelector('#customer-song').value = '';
+                    }
+                }
+                else if(typeof(japanese_actor) == 'object'){
+                    if(typeof(japanese_music)!='object' && typeof(japanese_song)!='object'){
+                      document.querySelector('#customer-music').value = (japanese_music + '\n');
+                      document.querySelector('#customer-actor').value = '';
+                      document.querySelector('#customer-song').value = (japanese_song + '\n');
+                    }
+                    else if(typeof(japanese_music)=='object' && typeof(japanese_song)!='object'){
+                      document.querySelector('#customer-music').value = '';
+                      document.querySelector('#customer-actor').value = '';
+                      document.querySelector('#customer-song').value = (japanese_song + '\n');
+                    }
+                    else if(typeof(japanese_music)!='object' && typeof(japanese_song)=='object'){
+                      document.querySelector('#customer-music').value = (japanese_music + '\n');
+                      document.querySelector('#customer-actor').value = '';
+                      document.querySelector('#customer-song').value = '';
+                    }
+                    else{
+                      document.querySelector('#customer-music').value = '';
+                      document.querySelector('#customer-actor').value = '';
+                      document.querySelector('#customer-song').value = '';
+                    }
+                }
+                else if(typeof(japanese_song) == 'object'){
+                    if(typeof(japanese_music) !='object' && typeof(japanese_actor)!='object'){
+                      document.querySelector('#customer-music').value = (japanese_music + '\n');
+                      document.querySelector('#customer-actor').value = (japanese_actor + '\n');
+                      document.querySelector('#customer-song').value = '';
+                    }
+                    else if(typeof(japanese_music)=='object' && typeof(japanese_actor)!='object'){
+                      document.querySelector('#customer-music').value = '';
+                      document.querySelector('#customer-actor').value = (japanese_actor + '\n');
+                      document.querySelector('#customer-song').value = '';
+                    }
+                    else if(typeof(japanese_music)!='object' && typeof(japanese_actor)=='object'){
+                      document.querySelector('#customer-music').value = (japanese_music + '\n');
+                      document.querySelector('#customer-actor').value = '';
+                      document.querySelector('#customer-song').value = '';
+                    }
+                    else{
+                      document.querySelector('#customer-music').value = '';
+                      document.querySelector('#customer-actor').value = '';
+                      document.querySelector('#customer-song').value = '';
+                    }
+                }
+                else{
+                    document.querySelector('#customer-music').value = (japanese_music + '\n');
+                    document.querySelector('#customer-actor').value = (japanese_actor + '\n');
+                    document.querySelector('#customer-song').value = (japanese_song + '\n');
+                }
+            }
         };
 
         chatSocket.onclose = function(e) {
@@ -69,5 +147,14 @@ if(!localStorage.total){
         }
         localStorage.total = password.toLowerCase();
     }
+
+    // 모바일 웹 주소창 숨기기
+    window.addEventListener('load', function() {
+      // body의 height를 살짝 늘리는 코드
+      document.body.style.height = (document.documentElement.clientHeight + 5) + 'px';
+      // scroll를 제어 하는 코드
+      setTimeout(scrollTo, 0, 0, 1);
+    }, false);
+
 </script>
 </html>

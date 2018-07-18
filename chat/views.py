@@ -116,7 +116,7 @@ def main_detail(request, pk):
         reviews queryset, pk, musical model
     """
     musical = get_object_or_404(Musical, pk=pk)
-    reviews = Review.objects.all().filter(musical=pk)[:5]
+    reviews = Review.objects.order_by('-published_date').all().filter(musical=pk)[:5]
     return render(request, 'chat/main.html', {
         'musical':musical,
         'reviews':reviews,
@@ -290,18 +290,19 @@ def toJson_password(queryset):
         cnt += 1
     return out
 
-def review(request, pk):
+def review(request, room_name):
     """
     리뷰 페이지
     리뷰 작성 폼과 리뷰 리스트 전달
 
     :param
-        request, pk
+        request, room_name
     :return:
         review queryset, form,  pk
     """
-    musical = get_object_or_404(Musical, pk=pk)
-    reviews = Review.objects.all().filter(musical=pk)
+    musical = get_object_or_404(Musical, title=room_name)
+    print(musical.title)
+    reviews = Review.objects.all().filter(musical__title=room_name)
     if request.method =="POST":
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -309,11 +310,10 @@ def review(request, pk):
             review.musical = musical
             review.published_date = timezone.now()
             review.save()
-            return redirect('review', pk=musical.pk)
+            return redirect('main_detail', pk=musical.pk)
     else:
         form = ReviewForm()
     return render(request, 'chat/review.html',  {
-        'reviews':reviews,
+        'musical':musical,
         'form':form,
-        'pk':pk,
     })

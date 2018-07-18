@@ -57,9 +57,9 @@ class Review(models.Model):
 class Script(models.Model):
     musical = models.ForeignKey(Musical, related_name='scripts')        #OnetoMany 연결
     language = models.CharField(null=True, max_length=30)               #언어
-    music = models.CharField(null=True, max_length=200)                 #음악
-    actor = models.CharField(null=True, max_length=50)                  #배우
-    song = models.CharField(null=True, max_length=400)                  #노래, 가사
+    music = models.CharField(blank=True, null=True, max_length=200)                 #음악
+    actor = models.CharField(blank=True, null=True, max_length=50)                  #배우
+    song = models.CharField(blank=True, null=True, max_length=400)                  #노래, 가사
     order = models.IntegerField(null=True)                              #순서
 
     def __str__(self):

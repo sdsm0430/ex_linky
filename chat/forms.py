@@ -14,7 +14,7 @@ class PasswordForm(forms.ModelForm):
         )
 
 class AdminPasswordForm(forms.ModelForm):
-    admin_password2 = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    admin_password2 = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Name',}))
 
     class Meta:
         model = Musical
@@ -25,13 +25,12 @@ class AdminPasswordForm(forms.ModelForm):
         'admin_password',
         )
 
-
 class ReviewForm(forms.ModelForm):
     review = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-
+    star = forms.IntegerField()
     class Meta:
         model = Review
-        fields = ('review',)
+        fields = ('review', 'star',)
 
 class ApplyForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
