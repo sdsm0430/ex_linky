@@ -1,59 +1,75 @@
 <!-- chat/templates/chat/operate.html -->
 <!DOCTYPE html>
 {% load i18n %}
+{% load staticfiles %}
 <html>
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <title>Admin</title>
+    <title>Operating</title>
     <style>
-        html, body{
+        html{
         height:100%;
         }
     </style>
 </head>
-<body style="background-color:black;">
-    <div class="container">
-        <div style="padding-top:5%; padding-left:2%;">
-            <textarea id="a-music" cols="40" rows="2" style="resize:none; background-color:black; border:black; color:rgb(200, 200, 200); text-align:left;">
-            </textarea>
-            <textarea id="a-actor" type="text" cols="10" rows="3" style="resize:none; background-color:black; border:black; color:rgb(200, 200, 200); text-align:center;">
-            </textarea>
-            <textarea id="a-song" type="text" size="100" cols="20" rows="3" style="width:70%; resize:none; background-color:black; border:black; color:white; text-align:left;">
-            </textarea>
+<body style="background-color:black; width:100%; height:100%;">
+    <div style="width:100%; height:85%;">
+        <div class="prev-script" style="margin-top:4%; margin-left:5%; width:90%; height:30%; border-color:white;">
+          <div style="color:rgb(160, 40, 40); font-weight:bold; font-size:13px;">이전 자막</div>
+          <div style="">
+              <div>
+                <textarea id="a-music" rows="1" style="width:100%; resize:none; border-color:black; background-color:black; color:rgb(180, 180, 180); text-align:left;">
+                </textarea>
+              </div>
+              <div>
+                <textarea id="a-actor" type="text" rows="3" style="width:24%; resize:none; border-color:black; background-color:black; color:rgb(180, 180, 180); text-align:left; ">
+                </textarea>
+                <textarea id="a-song" type="text" rows="3" style="width:74%; resize:none; border-color:black; background-color:black; color:rgb(180, 180, 180); text-align:left;">
+                </textarea>
+              </div>
+          </div>
         </div>
 
-        <div style="padding-top:5%; padding-left:2%;">
-            <textarea id="b-music" cols="40" rows="2" style="resize:none; background-color:black; border:black; color:rgb(200, 200, 200); text-align:left;">
-            </textarea>
-            <textarea id="b-actor" type="text" cols="10" rows="3" style="resize:none; background-color:black; border:black; color:rgb(200, 200, 200); text-align:center;">
-            </textarea>
-            <textarea id="b-song" type="text" size="100" cols="20" rows="3" style="width:70%; resize:none; background-color:black; border:black; color:white; text-align:left;">
-            </textarea>
+        <div class="present-script" style="margin-top:3%;  width:100%; height:30%; border-color:white; background-color:rgb(40,40,40);">
+          <div style="color:red; font-weight:bold; margin-left:5%; font-size:16px;">현재 자막</div>
+          <div style="">
+              <textarea id="b-music" rows="1" style="width:90%; margin-left:5%; resize:none; border-color:rgb(40,40,40); background-color:rgb(40,40,40); color:rgb(180, 180, 180); text-align:left;">
+              </textarea>
+              <textarea id="b-actor" type="text" rows="3" style="width:19%; margin-left:5%; resize:none; border-color:rgb(40,40,40); background-color:rgb(40,40,40); color:rgb(180, 180, 180); text-align:left; ">
+              </textarea>
+              <textarea id="b-song" type="text" rows="3" style="width:69%; resize:none; border-color:rgb(40,40,40); background-color:rgb(40,40,40); color:rgb(235, 235, 235); text-align:left;">
+              </textarea>
+          </div>
         </div>
 
-        <div style="padding-top:5%; padding-left:2%;">
-            <textarea id="c-music" cols="40" rows="2" style="resize:none; background-color:black; border:black; color:rgb(200, 200, 200); text-align:left;">
-            </textarea>
-            <textarea id="c-actor" type="text" cols="10" rows="3" style="resize:none; background-color:black; border:black; color:rgb(200, 200, 200); text-align:center;">
-            </textarea>
-            <textarea id="c-song" type="text" size="100" cols="20" rows="3" style="width:70%; resize:none; background-color:black; border:black; color:white; text-align:left;">
-            </textarea>
-        </div>
-
-        <div style="text-align:center; padding-top:5%;">
-            <input id="chat-submit-next" type="button" value="다음"/>
-            <input id="chat-submit-previous" type="button" value="이전"/>
-            <input id="chat-pause" type="button" value="일시중지"/>
-            <input id="chat-exit" type="button" value="종료"/>
+        <div class="next-script" style="margin-top:3%; margin-left:5%; width:90%; height:30%; border-color:white;">
+          <div style="color:rgb(160, 40, 40); font-size:13px;">다음 자막</div>
+          <div style="">
+              <textarea id="c-music" rows="1" style="width:100%; resize:none; border-color:black; background-color:black; color:rgb(180, 180, 180); text-align:left;">
+              </textarea>
+              <textarea id="c-actor" type="text" rows="3" style="width:24%; resize:none; border-color:black; background-color:black; color:rgb(180, 180, 180); text-align:left; ">
+              </textarea>
+              <textarea id="c-song" type="text" rows="3" style="width:74%; resize:none; border-color:black; background-color:black; color:rgb(180, 180, 180); text-align:left;">
+              </textarea>
+          </div>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+    <div style="text-align:center; width:100%; height:15%;">
+    <button id="chat-submit-previous" type="button" style="color:black; background-color:black; border:black;"><img src="{% static 'images/script/button_left.png' %}" style="background-color:black;"></button>
+        <button id="chat-submit-next" type="button" style="color:black; background-color:black; border:black;"><img src="{% static 'images/script/button_right.png' %}" style="background-color:black;"></button>
+        <span style="float:right; margin-right:5%;"><button id="chat-exit" type="button" style="color:black; background-color:black; border:black;"><img src="{% static 'images/script/button_finish.png' %}" style="width:60px; height:60px; background-color:black;"></button></span>
+        <span style="float:left; margin-left:5%;"><button id="chat-pause" type="button" style="color:black; background-color:black; border:black;"><img src="{% static 'images/script/button_pause.png' %}" style="width:60px; height:60px; background-color:black;"></button></span>
+    </div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
 <script>
     prev = -1;
     pause = 0;
