@@ -29,7 +29,7 @@ export PATH="$HOME/anaconda3/bin:$PATH"
 source acitivate linkey
 redis-server
 ```
-tmux 나오려면 `Ctrl + b` 그 다음 `Ctrl + d` 를 누르면 됩니다.
+tmux 나오려면 `Ctrl + b` 그 다음 `d` 를 누르면 됩니다.
 
 ### 3.3 tmux에 daphne로 배포
 ```bash
@@ -39,7 +39,7 @@ export PATH="$HOME/anaconda3/bin:$PATH"
 source acitivate linkey
 daphne -b 0.0.0.0 -p 8001 django_project.asgi:application
 ```
-tmux 나오려면 `Ctrl + b` 그 다음 `Ctrl + d` 를 누르면 됩니다.
+tmux 나오려면 `Ctrl + b` 그 다음 `d` 를 누르면 됩니다.
 
 
 ## 참고자료
