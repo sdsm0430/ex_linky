@@ -30,7 +30,7 @@
     {% for musical in musicals %}
         <div class="musical">
             <div class="musical-image">
-                <img src="{% static 'images/main_list/object_picture.png'%}">
+                <img src="{{ musical.repre_image.url }}" style="border-radius: 50%;">
             </div>
             <div class="musical-info">
                 <span class="musical-title"><a href="{% url 'admin_password' pk=musical.pk %}" style="text-decoration:none; color:black;">{{ musical.korean_title }}</a></span>

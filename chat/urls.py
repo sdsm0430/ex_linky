@@ -8,7 +8,6 @@ urlpatterns = [
     url(r'^$', views.main_list, name='main_list'),
     url(r'^main_detail/(?P<pk>\d+)/$', views.main_detail, name='main_detail'),
     url(r'^apply/(?P<pk>\d+)/$', views.apply, name='apply'),
-    url(r'^apply_image/(?P<pk>\d+)/$', views.apply_image, name='apply_image'),
     url(r'^apply_complete/(?P<pk>\d+)/$', views.apply_complete, name='apply_complete'),
     url(r'^choice/(?P<pk>\d+)/$', views.choice, name='choice'),
     url(r'^review/(?P<room_name>[^/]+)/$', views.review, name='review'),
