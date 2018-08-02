@@ -9,7 +9,7 @@ import json
 @login_required
 def operate_list(request):
     """
-    오퍼레이팅 뮤지컬 리스트 페이지
+    musical list page for operating
 
     :param
         request
@@ -22,14 +22,40 @@ def operate_list(request):
     })
 
 @login_required
+def admin_password(request, pk):
+    """
+    password check page for operating
+
+    :param
+        request, pk
+    :return
+        form, musical model
+    """
+    musical = get_object_or_404(Musical, pk=pk)
+    if request.method == "POST":
+        form = AdminPasswordForm(request.POST, instance=musical)
+        if form.is_valid():
+            admin_password2 = form.save(commit=False)
+            if musical.admin_password == musical.admin_password2:
+                return redirect('operate_password', pk=musical.pk)
+            else:
+                return redirect('admin_password', pk=musical.pk)
+    else:
+        form = AdminPasswordForm(instance=musical)
+    return render(request, 'chat/admin_password.html', {
+        'form': form,
+        'musical':musical,
+    })
+
+@login_required
 def password(request, pk):
     """
-    오페레이팅 패스워드 등록 페이지
+    password enrollment for operating
 
     :param
         request, pk
     :return:
-        form, musical model
+        pk, form, musical model
     """
     musical = get_object_or_404(Musical, pk=pk)
     if request.method == "POST":
@@ -48,44 +74,14 @@ def password(request, pk):
     })
 
 @login_required
-def admin_password(request, pk):
-    """
-    오퍼레이팅 패스워드 확인 페이지
-
-    TODO:
-    유효성 검사
-
-    :param
-        request, pk
-    :return
-        form, musical model
-    """
-    musical = get_object_or_404(Musical, pk=pk)
-    if request.method == "POST":
-        form = AdminPasswordForm(request.POST, instance=musical)
-        if form.is_valid():
-            admin_password2 = form.save(commit=False)
-            admin_password2.save()
-            if musical.admin_password == musical.admin_password2:
-                return redirect('operate_password', pk=musical.pk)
-            else:
-                return redirect('admin_password', pk=musical.pk)
-    else:
-        form = AdminPasswordForm(instance=musical)
-    return render(request, 'chat/admin_password.html', {
-        'form': form,
-        'musical':musical,
-    })
-
-@login_required
 def operate(request, room_name):
     """
-    자막 오퍼레이팅 페이지
+    operating page
 
     :param
         request, room_name
     :return
-        room_name(json), script queryset 4종류
+        room_name(json), script queryset to json(case 4)
     """
     musical = get_object_or_404(Musical, title=room_name)
     a = Script.objects.all().filter(language='한국어', musical=musical)
@@ -101,6 +97,14 @@ def operate(request, room_name):
     })
 
 def main_list(request):
+    """
+    musical list page for user
+
+    :param
+        request
+    :return
+        musical queryset
+    """
     musicals = Musical.objects.order_by('-published_date')
     return render(request, 'chat/main_list.html', {
         'musicals': musicals,
@@ -108,7 +112,7 @@ def main_list(request):
 
 def main_detail(request, pk):
     """
-    메인 페이지
+    musical detail page for user
 
     :param
         request, pk
@@ -125,7 +129,7 @@ def main_detail(request, pk):
 
 def apply(request, pk):
     """
-    자막 요청 페이지
+    apply page for script request
 
     :param
         request, pk
@@ -147,33 +151,14 @@ def apply(request, pk):
         'pk':pk,
     })
 
-def apply_image(request, pk):
-    """
-    이미지 업로드 뷰, 현재 사용하지 않음
-    """
-    musical = get_object_or_404(Musical, pk=pk)
-    if request.method =="POST":
-        form = ApplyImageForm(request.POST, request.FILES)
-        if form.is_valid():
-            apply_image = form.save(commit=False)
-            apply_image.musical = musical
-            apply_image.save()
-            return redirect('apply_image', pk=musical.pk)
-    else:
-        form = ApplyImageForm()
-    return render(request, 'chat/apply_image.html', {
-        'form':form,
-        'pk':pk,
-    })
-
 def apply_complete(request, pk):
     """
-    자막 요청 완료 페이지
+    apply complete page about script request
 
     :param
         request, pk:
     :return
-        musical model, pk
+        musical model, apply quertset, pk
     """
     musical = get_object_or_404(Musical, pk=pk)
     apply = Apply.objects.last()
@@ -186,7 +171,7 @@ def apply_complete(request, pk):
 
 def choice(request, pk):
     """
-    언어 선택 페이지
+    language choice page
 
     :param
         request, pk
@@ -201,12 +186,12 @@ def choice(request, pk):
 
 def user_korean(request, room_name):
     """
-    korean 자막 송출 페이지
+    korean script page for user
 
     :param
         request, room_name
     :return
-        room_name(json), musical model, musical queryset
+        room_name(json), musical model, musical queryset for password
     """
     musical = get_object_or_404(Musical, title=room_name)
     password = Musical.objects.all().filter(title=room_name)
@@ -218,20 +203,20 @@ def user_korean(request, room_name):
 
 def user_japanese(request, room_name):
     """
-    japanese 자막 송출 페이지
+    japanese script page for user
 
     """
     musical = get_object_or_404(Musical, title=room_name)
     password = Musical.objects.all().filter(title=room_name)
     return render(request, 'chat/user_japanese.html', {
         'room_name_json': mark_safe(json.dumps(room_name)),
-        'musical':musical,
         'password': mark_safe(json.dumps(toJson_password(password))),
+        'musical':musical,
     })
 
 def user_english(request, room_name):
     """
-    english 자막 송출 페이지
+    english script page for user
 
     """
     musical = get_object_or_404(Musical, title=room_name)
@@ -244,7 +229,7 @@ def user_english(request, room_name):
 
 def user_chinese(request, room_name):
     """
-    chinese 자막 송출 페이지
+    chinese script page for user
 
     """
     musical = get_object_or_404(Musical, title=room_name)
@@ -257,10 +242,7 @@ def user_chinese(request, room_name):
 
 def toJson(queryset):
     """
-    TODO:
-        model의 파라미터를 모두 json형태로 바꾸어야 한다.
-
-        현재는 actor, song, music 만을 보낸다.
+    queryset to json
 
     :param
         queryset: django queryset
@@ -280,6 +262,10 @@ def toJson(queryset):
     return out
 
 def toJson_password(queryset):
+    """
+    queryset to json
+
+    """
     out = {}
     cnt = 0
     for laugh in queryset:
@@ -292,13 +278,12 @@ def toJson_password(queryset):
 
 def review(request, room_name):
     """
-    리뷰 페이지
-    리뷰 작성 폼과 리뷰 리스트 전달
+    review page for user
 
     :param
         request, room_name
     :return:
-        review queryset, form,  pk
+        musical model, form
     """
     musical = get_object_or_404(Musical, title=room_name)
     print(musical.title)
