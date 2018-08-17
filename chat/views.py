@@ -84,10 +84,10 @@ def operate(request, room_name):
         room_name(json), script queryset to json(case 4)
     """
     musical = get_object_or_404(Musical, title=room_name)
-    a = Script.objects.all().filter(language='한국어', musical=musical)
-    b = Script.objects.all().filter(language='일본어', musical=musical)
-    c = Script.objects.all().filter(language='중국어', musical=musical)
-    d = Script.objects.all().filter(language='영어', musical=musical)
+    a = Script.objects.all().filter(language='한국어', musical=musical).order_by('order')
+    b = Script.objects.all().filter(language='일본어', musical=musical).order_by('order')
+    c = Script.objects.all().filter(language='중국어', musical=musical).order_by('order')
+    d = Script.objects.all().filter(language='영어', musical=musical).order_by('order')
     return render(request, 'chat/operate.html', {
         'room_name_json': mark_safe(json.dumps(room_name)),
         'json_korean': mark_safe(json.dumps(toJson(a))),
